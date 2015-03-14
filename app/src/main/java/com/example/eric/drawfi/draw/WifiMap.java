@@ -17,7 +17,11 @@ public class WifiMap {
         this.map = Bitmap.createBitmap(cols, rows, Bitmap.Config.RGB_565);
     }
 
-    public void drawCircle(int x , int y , int color , int radius){
+    public void update() {
+        // TODO: Get the current position and the strength of the WiFi to pass to drawCircle.
+    }
+
+    private void drawCircle(int x , int y , int color , int radius){
         int startX = (x- radius)<0?0:x- radius;
         int startY = (y-radius)<0?0:y-radius;
 
@@ -33,7 +37,6 @@ public class WifiMap {
                     map.setPixel(i , j , Color.HSVToColor(1, newColor));
                     //draw shit
                 }
-
             }
         }
     }
@@ -57,5 +60,9 @@ public class WifiMap {
 
     public double getDistance(int x1 , int y1 , int x2 , int y2 ){
         return Math.sqrt( Math.pow(x1 - x2 , 2) + Math.pow(y1 - y2 , 2));
+    }
+
+    public Bitmap getMap() {
+        return this.map;
     }
 }

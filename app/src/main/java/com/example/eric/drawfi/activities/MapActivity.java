@@ -96,12 +96,12 @@ public class MapActivity extends Activity {
         public void run() {
             while (!isInterrupted()) {
                 // Update the map with the current position.
-//                mWifiImageView.update();
+                wifiMap.update();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                        update(mWifiImageView.getWifiMap());
+                        update(wifiMap.getMap());
                     }
                 });
             }

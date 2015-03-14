@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.eric.drawfi.R;
+import com.example.eric.drawfi.adr.Adr;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
      * BUTTON HANDLERS
      */
     public void startButtonHandler(View view) {
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, Adr.class);
         startActivity(intent);
     }
 }
