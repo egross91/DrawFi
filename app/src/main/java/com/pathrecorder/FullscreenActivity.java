@@ -2,6 +2,7 @@ package com.pathrecorder;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Display;
@@ -186,7 +188,7 @@ public class FullscreenActivity extends Activity {
         storage = new Storage(magnetometerAnalyzer, this);
         storage.loadCalibrationData();
         
-        movement = new Movement(magnetometerAnalyzer);
+        movement = new Movement(magnetometerAnalyzer, (WifiManager)getSystemService(Context.WIFI_SERVICE));
         sketchView.setMovementObject(movement);
         
     	programState = new ProgramState(sketchView, magnetometerAnalyzer, storage, movement);

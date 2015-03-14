@@ -1,6 +1,8 @@
 package com.pathrecorder;
 
 import android.graphics.Path;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 
 import java.util.LinkedList;
 
@@ -183,8 +185,11 @@ public class Movement {
 	
 	private MovementStatistics movementStats;
 	private boolean isMovementStatisticsNeeded;
-	
-	public Movement(Orientation orientation) {
+
+    private WifiManager wifiManager;
+
+	public Movement(Orientation orientation, WifiManager manager) {
+        this.wifiManager = manager;
 		this.isMovementStatisticsNeeded = false;
 		this.movementStats = new MovementStatistics();
 		this.orientation = orientation;
@@ -353,7 +358,10 @@ public class Movement {
 			long timeDelta = timeInMilliSec - lastTimeInMilliSec;
 			
 			if (timeDelta >= MIN_DURATION_FOR_MOVE_IN_MILLISECONDS) {
-				moves.add(new Move(lastDirection, timeDelta, 50));
+                WifiInfo info = wifiManager.getConnectionInfo();
+                int linkSpeed = info.getLinkSpeed();
+                int wifiLevel = WifiManager.calculateSignalLevel(info.getRssi(), linkSpeed);
+				moves.add(new Move(lastDirection, timeDelta,wifiLevel ));
 				lastDirection = direction;
 				lastTimeInMilliSec = timeInMilliSec;
 			}
