@@ -313,7 +313,7 @@ public class SketchView extends View {
 		
 		if (movement == null)
 			return;
-				
+		//WifiMap.clear();
 		startPoint = new float[] {canvas.getWidth() / 2, viewYlimit / 2};
 		
 		Object[] movementData = movement.getMovementDataForDraw(startPoint);
@@ -331,15 +331,22 @@ public class SketchView extends View {
 			MovementStatistics stats = (MovementStatistics)movementData[2];
             LinkedList<Float[]> ll = (LinkedList<Float[]>) movementData[3];
             for (Float[] pt : ll) {
-                canvas.drawCircle(pt[0], pt[1], 15, someColor);
+                Paint p = new Paint();
+                p.setStrokeWidth(2);
+                p.setStyle(Style.STROKE);
+                p.setAntiAlias(true);
+                p.setColor(0xffff0000);
+                System.out.println("COLOR: " + pt[2].intValue() + " VS: " + 0xffff0000);
+                canvas.drawCircle(pt[0], pt[1], 20, p);
+                //WifiMap.drawCircle(pt[0].intValue() , pt[1].intValue() , pt[2].intValue(), 20, canvas);
             }
 			
 			final int pathPointRadius = 2;
-			
-			canvas.drawPath(path, paint);
-			
-			canvas.drawCircle(lastPoint[0], lastPoint[1], pathPointRadius, ovalCenterPaint);
-			WifiMap.drawCircle(lastPoint[0].intValue() , lastPoint[1].intValue() , 50 , 15 , canvas);
+			//System.out.println("WIDTH: " + canvas.getWidth() + " HEIGHT: " + canvas.getHeight());
+			//WifiMap.drawCircle(lastPoint[0].intValue() , lastPoint[1].intValue() , 50 , 15 , canvas);
+
+            canvas.drawCircle(lastPoint[0], lastPoint[1], pathPointRadius, ovalCenterPaint);
+            canvas.drawPath(path, paint);
 			drawMovementStatistics(stats, canvas);
 		}
 		

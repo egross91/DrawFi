@@ -6,24 +6,26 @@ import android.graphics.Color;
 
 public class WifiMap {
     private static int[][] visited;
-    private int center;
     private static Bitmap map;
 
-    public static final int DEFAULT_HEIGHT = 800;
-    public static final int DEFAULT_WIDTH = 600;
+    public static final int DEFAULT_HEIGHT = 1701;
+    public static final int DEFAULT_WIDTH = 1080;
 
-    public WifiMap() {
-        this.visited = new int[DEFAULT_HEIGHT][DEFAULT_WIDTH];
-        this.center = 500;
-        this.map = Bitmap.createBitmap(DEFAULT_HEIGHT, DEFAULT_WIDTH, Bitmap.Config.RGB_565);
+    static {
+        visited = new int[DEFAULT_WIDTH][DEFAULT_HEIGHT];
+        map = Bitmap.createBitmap(DEFAULT_WIDTH, DEFAULT_HEIGHT, Bitmap.Config.RGB_565);
+    }
+
+    public static void clear() {
+
     }
 
     public static void drawCircle(int x , int y , int color , int radius , Canvas canvas){
-        int startX = (x- radius)<0?0:x- radius;
+        int startX = (x-radius)<0?0:x- radius;
         int startY = (y-radius)<0?0:y-radius;
 
-        int endX = (x+radius)>DEFAULT_WIDTH?DEFAULT_WIDTH:x+radius;
-        int endY = (y+radius)>DEFAULT_HEIGHT?DEFAULT_HEIGHT:y+radius;
+        int endX = (x+radius)>=DEFAULT_WIDTH?DEFAULT_WIDTH:x+radius;
+        int endY = (y+radius)>=DEFAULT_HEIGHT?DEFAULT_HEIGHT:y+radius;
         endX = endX < 0 ? 0 : endX;
         endY = endY < 0 ? 0 : endY;
 

@@ -361,7 +361,7 @@ public class Movement {
                 WifiInfo info = wifiManager.getConnectionInfo();
                 int linkSpeed = info.getLinkSpeed();
                 int wifiLevel = WifiManager.calculateSignalLevel(info.getRssi(), linkSpeed);
-				moves.add(new Move(lastDirection, timeDelta,wifiLevel ));
+				moves.add(new Move(lastDirection, timeDelta, wifiLevel));
 				lastDirection = direction;
 				lastTimeInMilliSec = timeInMilliSec;
 			}
@@ -385,7 +385,7 @@ public class Movement {
     	
     	// convert moves to X,Y coordinates
 		LinkedList<Float[]> points = new LinkedList<>();
-		points.add(new Float[] {startPoint[0], startPoint[1]});
+		points.add(new Float[] {startPoint[0], startPoint[1], (float) 0});
 		
 		float[] lastPoint = startPoint;
 		for (int i = 1; i < moves.size(); i++) {
@@ -436,7 +436,7 @@ public class Movement {
 		for (int i = 0; i < points.size(); i++) {
 			Float[] oldPoint = points.get(i);
 			Float[] newPoint = Vector2D.Add(oldPoint, shift);
-			points.set(i, newPoint);
+            points.set(i, newPoint);
 		}
 		
 	}
@@ -488,6 +488,8 @@ public class Movement {
 			this.movementStats.calculateMovementStatistics(moves);
 
 		LinkedList<Float[]> points = convertMovesToPoints(startPoint);
+        LinkedList<Float[]> clone = new LinkedList<Float[]>();
+        clone.addAll(points);
 		
 		float[] limits = getMinMaxCoordsOfPoints(points);
 		
@@ -501,7 +503,7 @@ public class Movement {
 		ret[0] = path;
 		ret[1] = pointsFiltered.getLast();
 		ret[2] = this.movementStats;
-		ret[3] = points;
+		ret[3] = clone;
 		return ret;
 	}
 	
