@@ -8,8 +8,8 @@ public class WifiMap {
     private Bitmap map;
 
 
-    public static final int DEFAULT_HEIGHT = 10000000;
-    public static final int DEFAULT_WIDTH = 10000000;
+    public static final int DEFAULT_HEIGHT = 500;
+    public static final int DEFAULT_WIDTH = 500;
 
     public WifiMap(int rows, int cols) {
         this.visited = new int[rows][cols];
