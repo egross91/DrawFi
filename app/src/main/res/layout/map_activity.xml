@@ -17,7 +17,7 @@
         android:id="@+id/doneButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/done"
+        android:text="DONE"
         android:layout_gravity="center_horizontal"
         android:onClick="doneButtonHandler"/>
 </LinearLayout>

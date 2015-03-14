@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DrawFi</string>
-    <string name="action_settings">Settings</string>
-    <string name="start">Start</string>
-    <string name="out_of_range">You are out of range of the area</string>
-    <string name="done">Done</string>
+
+    <string name="app_name">PathRecorder</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>
