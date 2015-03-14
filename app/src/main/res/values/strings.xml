@@ -2,4 +2,6 @@
     <string name="app_name">DrawFi</string>
     <string name="action_settings">Settings</string>
     <string name="start">Start</string>
+    <string name="out_of_range">You are out of range of the area</string>
+    <string name="done">Done</string>
 </resources>
