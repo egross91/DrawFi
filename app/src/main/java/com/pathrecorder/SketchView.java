@@ -1,9 +1,15 @@
 package com.pathrecorder;
 
-import android.content.*;
-import android.graphics.*;
-import android.graphics.Paint.*;
-import android.view.*;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.view.View;
+
+import java.util.LinkedList;
 
 
 public class SketchView extends View {
@@ -300,13 +306,15 @@ public class SketchView extends View {
 		}    	
 		
 	}
+
+    static float[] startPoint;
 	
 	private void drawMovement(Canvas canvas) {
 		
 		if (movement == null)
 			return;
 				
-		final float[] startPoint = new float[] {canvas.getWidth() / 2, viewYlimit / 2};
+		startPoint = new float[] {canvas.getWidth() / 2, viewYlimit / 2};
 		
 		Object[] movementData = movement.getMovementDataForDraw(startPoint);
 		if (movementData != null) {
@@ -321,6 +329,10 @@ public class SketchView extends View {
 			Path path = (Path)movementData[0];
 			Float[] lastPoint = (Float[])movementData[1];
 			MovementStatistics stats = (MovementStatistics)movementData[2];
+            LinkedList<Float[]> ll = (LinkedList<Float[]>) movementData[3];
+            for (Float[] pt : ll) {
+                canvas.drawCircle(pt[0], pt[1], 15, someColor);
+            }
 			
 			final int pathPointRadius = 2;
 			
@@ -332,6 +344,16 @@ public class SketchView extends View {
 		}
 		
 	}
+
+    static Paint someColor;
+    static {
+
+        someColor =  new Paint();
+        someColor.setStrokeWidth(2);
+        someColor.setColor(0xffff0000);
+        someColor.setStyle(Style.STROKE);
+        someColor.setAntiAlias(true);
+    }
 	
 	private void initDrawing(Canvas canvas) {		
 		if (viewYlimit == -1.0f)

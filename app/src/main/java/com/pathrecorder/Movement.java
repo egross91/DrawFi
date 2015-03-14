@@ -1,16 +1,18 @@
 package com.pathrecorder;
 
-import java.util.*;
-
 import android.graphics.Path;
+
+import java.util.LinkedList;
 
 class Move {
 	public int direction;
 	public long durationInMilliSec;
+    public int signal;
 	
-	public Move(int direction, long durationInMilliSec) {
+	public Move(int direction, long durationInMilliSec, int signal) {
 		this.direction = direction;
 		this.durationInMilliSec = durationInMilliSec;
+        this.signal = signal;
 	}
 }
 
@@ -343,7 +345,7 @@ public class Movement {
 		int direction = getDiscreetAngle();
 		
 		if (moves.size() == 0) {
-			moves.add(new Move(direction, 0));
+			moves.add(new Move(direction, 0, 50));
 			lastDirection = direction;
 			lastTimeInMilliSec = timeInMilliSec;
 		}
@@ -351,7 +353,7 @@ public class Movement {
 			long timeDelta = timeInMilliSec - lastTimeInMilliSec;
 			
 			if (timeDelta >= MIN_DURATION_FOR_MOVE_IN_MILLISECONDS) {
-				moves.add(new Move(lastDirection, timeDelta));
+				moves.add(new Move(lastDirection, timeDelta, 50));
 				lastDirection = direction;
 				lastTimeInMilliSec = timeInMilliSec;
 			}
@@ -381,7 +383,7 @@ public class Movement {
 		for (int i = 1; i < moves.size(); i++) {
 			Move move = moves.get(i);
 			float[] drawPoint = Vector2D.getDrawPoint(startVec, move.direction, move.durationInMilliSec * pixels_for_1_milliSecond, lastPoint);
-			points.add(new Float[] {drawPoint[0], drawPoint[1]});
+			points.add(new Float[] {drawPoint[0], drawPoint[1], (float) move.signal});
 			lastPoint = drawPoint;
 		}
 		
@@ -487,11 +489,11 @@ public class Movement {
 		
 		Path path = convertPointsToPath(pointsFiltered);
 		
-		Object[] ret = new Object[3];
+		Object[] ret = new Object[4];
 		ret[0] = path;
 		ret[1] = pointsFiltered.getLast();
 		ret[2] = this.movementStats;
-		
+		ret[3] = points;
 		return ret;
 	}
 	
