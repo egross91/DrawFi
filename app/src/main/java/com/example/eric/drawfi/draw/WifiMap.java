@@ -1,6 +1,7 @@
 package com.example.eric.drawfi.draw;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 public class WifiMap {
     private int[][] visited;
@@ -8,8 +9,8 @@ public class WifiMap {
     private Bitmap map;
 
 
-    public static final int DEFAULT_HEIGHT = 10000000;
-    public static final int DEFAULT_WIDTH = 10000000;
+    public static final int DEFAULT_HEIGHT = 10000;
+    public static final int DEFAULT_WIDTH = 10000;
 
     public WifiMap(int rows, int cols) {
         this.visited = new int[rows][cols];
@@ -30,17 +31,33 @@ public class WifiMap {
         endY = endY < 0 ? 0 : endY;
 
         for(int i = startX ; i < endX; i++){
-            for(int j = 0 ; j < endY; j++){
-                if(getDistance(x , y , i , j)<=radius){
-                    
+            for(int j = startY ; j < endY; j++){
+                if(getDistance(x , y , i , j) <= radius){
+                    float[] newColor = getNewColor(color , map.getPixel(i, j) , visited[i][j]);
+                    map.setPixel(i , j , Color.HSVToColor(1, newColor));
                     //draw shit
                 }
 
             }
         }
+    }
 
+    public float[] getNewColor( int NextColor , int CurrentColor , int numTimes){
 
+        float [] hsvNext = new float[3];
+        Color.colorToHSV(NextColor , hsvNext);
+        float [] hsvCurrent = new float[3];
+        Color.colorToHSV( CurrentColor , hsvCurrent);
 
+        return getNewHSV(numTimes, hsvCurrent , hsvNext);
+    }
+
+    public float[] getNewHSV(int numTimes , float[] hsvCurrent , float[] hsvNext){
+        float [] newHSV =new float[3];
+        for(int index=0;index<3;index++) {
+            newHSV[index] = (hsvCurrent[index] * numTimes + hsvNext[index]) / (numTimes + 1);
+        }
+        return newHSV;
     }
 
     public double getDistance(int x1 , int y1 , int x2 , int y2 ){
