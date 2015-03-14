@@ -352,6 +352,12 @@ public class SketchView extends View {
 		
 	}
 
+    /*
+    WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+    int linkSpeed = wifiManager.getConnectionInfo().getRssi();
+    int wifiLevel = WifiManager.calculateSignalLevel(linkSpeed,5);
+    */
+
     static Paint someColor;
     static {
 
@@ -408,9 +414,5 @@ public class SketchView extends View {
         
         drawMenu(canvas);
     }
-
-
-
-
 
 }

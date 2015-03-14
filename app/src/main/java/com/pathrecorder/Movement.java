@@ -1,5 +1,6 @@
 package com.pathrecorder;
 
+import android.graphics.Color;
 import android.graphics.Path;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -359,15 +360,30 @@ public class Movement {
 			
 			if (timeDelta >= MIN_DURATION_FOR_MOVE_IN_MILLISECONDS) {
                 WifiInfo info = wifiManager.getConnectionInfo();
-                int linkSpeed = info.getLinkSpeed();
-                int wifiLevel = WifiManager.calculateSignalLevel(info.getRssi(), linkSpeed);
+                int wifiLevel = WifiManager.calculateSignalLevel(info.getRssi(), 5);
 				moves.add(new Move(lastDirection, timeDelta, wifiLevel));
 				lastDirection = direction;
 				lastTimeInMilliSec = timeInMilliSec;
 			}
 		}
 	}
-	
+	static int getColorFromLevel(int level){
+        int color=0;
+        switch(level){
+            case 0:
+                color = Color.RED;
+            case 1:
+                color = Color.YELLOW;
+            case 2:
+                color = Color.BLUE;
+            case 3:
+                color = Color.GRAY;
+            default: color = Color.GRAY;
+        }
+
+        return color;
+
+    }
 	private LinkedList<Float[]> convertMovesToPoints(float[] startPoint) {
 
     	float[] startVec = {0.0f , -1.0f};
