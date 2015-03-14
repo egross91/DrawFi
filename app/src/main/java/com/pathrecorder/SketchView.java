@@ -327,7 +327,7 @@ public class SketchView extends View {
 			canvas.drawPath(path, paint);
 			
 			canvas.drawCircle(lastPoint[0], lastPoint[1], pathPointRadius, ovalCenterPaint);
-			
+			WifiMap.drawCircle(lastPoint[0].intValue() , lastPoint[1].intValue() , 50 , 15 , canvas);
 			drawMovementStatistics(stats, canvas);
 		}
 		
@@ -379,5 +379,9 @@ public class SketchView extends View {
         
         drawMenu(canvas);
     }
+
+
+
+
 
 }
