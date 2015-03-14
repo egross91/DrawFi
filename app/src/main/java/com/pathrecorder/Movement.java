@@ -491,7 +491,7 @@ public class Movement {
 		LinkedList<Float[]> filteredPoints = new LinkedList<>();
 		filteredPoints.add(points.get(0));
 		filteredPoints.add(points.get(1));
-		final int DEGREES_CHANGE = 20;
+		final int DEGREES_CHANGE = 10;
 		
 		for (int i = 2; i < points.size(); i++) {
 			Float[] lastPoint = filteredPoints.get(filteredPoints.size() - 1);
