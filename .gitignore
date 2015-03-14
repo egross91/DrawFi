@@ -5,3 +5,6 @@
 /.idea/misc.xml
 .DS_Store
 /build
+*/**.iml
+build/
+app/build
