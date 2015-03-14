@@ -8,10 +8,8 @@ public class WifiMap {
     private int center;
     private Bitmap map;
 
-
-
-    public static final int DEFAULT_HEIGHT = 500;
-    public static final int DEFAULT_WIDTH = 500;
+    public static final int DEFAULT_HEIGHT = 1000;
+    public static final int DEFAULT_WIDTH = 1000;
 
     public WifiMap(int rows, int cols) {
         this.visited = new int[rows][cols];
@@ -20,9 +18,6 @@ public class WifiMap {
     }
 
     public void drawCircle(int x , int y , int color , int radius){
-
-
-
         int startX = (x- radius)<0?0:x- radius;
         int startY = (y-radius)<0?0:y-radius;
 
@@ -44,7 +39,6 @@ public class WifiMap {
     }
 
     public float[] getNewColor( int NextColor , int CurrentColor , int numTimes){
-
         float [] hsvNext = new float[3];
         Color.colorToHSV(NextColor , hsvNext);
         float [] hsvCurrent = new float[3];

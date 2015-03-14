@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.eric.drawfi.R;
-import com.example.eric.drawfi.draw.DrawThread;
+import com.example.eric.drawfi.draw.WifiMap;
 
 public class MapActivity extends Activity {
     private DrawThread mDrawThread;
@@ -58,7 +58,7 @@ public class MapActivity extends Activity {
     /**
      * API
      */
-    public void update(Bitmap map) {
+    public void update(final Bitmap map) {
         this.mWifiImageView.setImageBitmap(map);
     }
 
@@ -75,5 +75,36 @@ public class MapActivity extends Activity {
     public void displaySimpleToast(CharSequence dialog) {
         Toast toast = Toast.makeText(getApplicationContext(), dialog, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    private class DrawThread extends Thread {
+        private WifiMap wifiMap;
+
+        public DrawThread() {
+            this.wifiMap = new WifiMap(WifiMap.DEFAULT_HEIGHT, WifiMap.DEFAULT_WIDTH);
+        }
+
+        public DrawThread(int n) {
+            this.wifiMap = new WifiMap(n, n);
+        }
+
+        public DrawThread(int height, int width) {
+            this.wifiMap = new WifiMap(height, width);
+        }
+
+        @Override
+        public void run() {
+            while (!isInterrupted()) {
+                // Update the map with the current position.
+//                mWifiImageView.update();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        update(mWifiImageView.getWifiMap());
+                    }
+                });
+            }
+        }
     }
 }
