@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.view.View;
 
@@ -333,20 +335,16 @@ public class SketchView extends View {
             for (Float[] pt : ll) {
                 Paint p = new Paint();
                 p.setStrokeWidth(2);
-                p.setStyle(Style.STROKE);
+                p.setColorFilter(new PorterDuffColorFilter(Movement.getColorFromLevel(pt[2].intValue()), PorterDuff.Mode.DARKEN));
+                p.setStyle(Style.FILL_AND_STROKE);
                 p.setAntiAlias(true);
-                p.setColor(0xffff0000);
-                System.out.println("COLOR: " + pt[2].intValue() + " VS: " + 0xffff0000);
-                canvas.drawCircle(pt[0], pt[1], 20, p);
+                p.setColor(Movement.getColorFromLevel(pt[2].intValue()));
+                System.out.println("COLOR: " + pt[2].intValue());
+                System.out.println(Movement.getColorFromLevel(pt[2].intValue()));
+                canvas.drawCircle(pt[0], pt[1], 30, p);
                 //WifiMap.drawCircle(pt[0].intValue() , pt[1].intValue() , pt[2].intValue(), 20, canvas);
             }
-			
-			final int pathPointRadius = 2;
-			//System.out.println("WIDTH: " + canvas.getWidth() + " HEIGHT: " + canvas.getHeight());
-			//WifiMap.drawCircle(lastPoint[0].intValue() , lastPoint[1].intValue() , 50 , 15 , canvas);
 
-            canvas.drawCircle(lastPoint[0], lastPoint[1], pathPointRadius, ovalCenterPaint);
-            canvas.drawPath(path, paint);
 			drawMovementStatistics(stats, canvas);
 		}
 		

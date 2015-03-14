@@ -100,9 +100,13 @@ public class FullscreenActivity extends Activity {
                 		menuManager.menuProcessEvents(coords);
                 	else {
                 		if (programState.getProgramState() != State.STATE_CALIBRATION &&
-                			programState.getProgramState() != State.STATE_EXPORT_MOVEMENT_PATH
-                		    )
-                			programState.setProgramState(State.STATE_PAUSE_WITH_MENU);
+                			programState.getProgramState() != State.STATE_EXPORT_MOVEMENT_PATH) {
+
+                            if (programState.getProgramState() == State.ALT) {
+                              programState.setProgramState(State.STATE_MOVEMENT_RESUME);
+                            } else
+                            programState.setProgramState(State.ALT);
+                        }
                 	}
                 	
                 	sketchView.invalidate();

@@ -16,7 +16,8 @@ public class ProgramState {
 		STATE_ZOOM_IN,
 		STATE_ZOOM_OUT,
 		STATE_MENU_ITEM_CHANGE,
-		STATE_EXPORT_MOVEMENT_PATH
+		STATE_EXPORT_MOVEMENT_PATH,
+        ALT
 	}
 	
 	private State state;
@@ -74,8 +75,17 @@ public class ProgramState {
 		// business logics of application
 		
 		switch (state) {
-		
-			case STATE_PAUSE_WITH_MENU:
+
+            case ALT:
+                if (movement.movementWasStarted()) {
+
+                    if (movement.getIsMovement())
+                        movement.StopMovement();
+                }
+                break;
+
+
+            case STATE_PAUSE_WITH_MENU:
 				
 				if (movement.movementWasStarted()) {
 					

@@ -360,7 +360,7 @@ public class Movement {
 			
 			if (timeDelta >= MIN_DURATION_FOR_MOVE_IN_MILLISECONDS) {
                 WifiInfo info = wifiManager.getConnectionInfo();
-                int wifiLevel = WifiManager.calculateSignalLevel(info.getRssi(), 5);
+                int wifiLevel = WifiManager.calculateSignalLevel(info.getRssi(), 1000);
 				moves.add(new Move(lastDirection, timeDelta, wifiLevel));
 				lastDirection = direction;
 				lastTimeInMilliSec = timeInMilliSec;
@@ -368,22 +368,34 @@ public class Movement {
 		}
 	}
 	static int getColorFromLevel(int level){
-        int color=0;
-        switch(level){
-            case 0:
-                color = Color.RED;
-            case 1:
-                color = Color.YELLOW;
-            case 2:
-                color = Color.BLUE;
-            case 3:
-                color = Color.GRAY;
-            default: color = Color.GRAY;
-        }
 
-        return color;
+        float percentage = level/1000.0f;
+        percentage = 2.0f * percentage - 1.0f;
+        return Color.rgb((int) (red((double)percentage)*255), (int) (green((double)percentage)*255), (int) (blue((double)percentage)*255));
 
     }
+
+    static double interpolate( double val, double y0, double x0, double y1, double x1 ) {
+        return (val-x0)*(y1-y0)/(x1-x0) + y0;
+    }
+    static double blue( double grayscale ) {
+        if ( grayscale < -0.33 ) return 1.0;
+        else if ( grayscale < 0.33 ) return interpolate( grayscale, 1.0, -0.33, 0.0, 0.33 );
+        else return 0.0;
+    }
+    static double green( double grayscale ) {
+        if ( grayscale < -1.0 ) return 0.0; // unexpected grayscale value
+        if  ( grayscale < -0.33 ) return interpolate( grayscale, 0.0, -1.0, 1.0, -0.33 );
+        else if ( grayscale < 0.33 ) return 1.0;
+        else if ( grayscale <= 1.0 ) return interpolate( grayscale, 1.0, 0.33, 0.0, 1.0 );
+        else return 1.0; // unexpected grayscale value
+    }
+    static double red( double grayscale ) {
+        if ( grayscale < -0.33 ) return 0.0;
+        else if ( grayscale < 0.33 ) return interpolate( grayscale, 0.0, -0.33, 1.0, 0.33 );
+        else return 1.0;
+    }
+
 	private LinkedList<Float[]> convertMovesToPoints(float[] startPoint) {
 
     	float[] startVec = {0.0f , -1.0f};
